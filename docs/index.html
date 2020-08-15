@@ -62,9 +62,104 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<a href="#nextjs-api-common-middleware" id="nextjs-api-common-middleware" style="color: inherit; text-decoration: none;">
+				<div align="center">
 					<h1>nextjs-api-common-middleware</h1>
+					<a href="https://nextjs-common-middleware.kldzj.dev/">Docs</a>
+					&nbsp;&nbsp;&bull;&nbsp;&nbsp;
+					<a href="https://github.com/kldzj/nextjs-api-common-middleware/issues">Issues</a>
+					&nbsp;&nbsp;&bull;&nbsp;&nbsp;
+					<a>Examples</a>
+					&nbsp;&nbsp;&bull;&nbsp;&nbsp;
+					<a>NPM</a>
+				</div>
+				<a href="#what-this-is-about" id="what-this-is-about" style="color: inherit; text-decoration: none;">
+					<h2>What this is about</h2>
 				</a>
+				<p>This package exports some common <a href="https://nextjs.org/">Next.js</a> API middleware patterns that you might need across different applications. It aims to provide useful and mostly flexible drop-in functions.</p>
+				<a href="#what-is-included" id="what-is-included" style="color: inherit; text-decoration: none;">
+					<h3>What is included</h3>
+				</a>
+				<ul>
+					<li>Authorization: Basic, Bearer (JWT), Custom</li>
+					<li>Route Guarding: Make sure certain fields are present in the request</li>
+					<li>RESTify Your Routes: A simple function allowing you to map different handlers to http methods</li>
+					<li>Error Catching: Wrap your handlers with a convenient error handling middleware</li>
+				</ul>
+				<p>If you have something in mind that is generally help- or useful and is not included in this list, please feel free to open an issue.</p>
+				<a href="#getting-started" id="getting-started" style="color: inherit; text-decoration: none;">
+					<h2>Getting Started</h2>
+				</a>
+				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
+					<h3>Installation</h3>
+				</a>
+				<a href="#npm" id="npm" style="color: inherit; text-decoration: none;">
+					<h4>NPM</h4>
+				</a>
+				<pre><code class="language-sh">yarn add nextjs-api-common-middleware</code></pre>
+				<a href="#npm-1" id="npm-1" style="color: inherit; text-decoration: none;">
+					<h4>NPM</h4>
+				</a>
+				<pre><code class="language-sh">npm install --save nextjs-api-common-middleware</code></pre>
+				<a href="#configuration" id="configuration" style="color: inherit; text-decoration: none;">
+					<h3>Configuration</h3>
+				</a>
+				<p>While generally not required, it is recommended that you re-export the middleware collection.</p>
+				<p>Create a file called <code>middleware.js</code>/<code>middleware.ts</code> somewhere that suits you well, the contents of the file should look something like this:</p>
+				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> m <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;nextjs-api-common-middleware&#x27;</span>;
+
+<span class="hljs-keyword">const</span> mm = m.createExport({
+    <span class="hljs-attr">catch</span>: <span class="hljs-function">(<span class="hljs-params">_req, res, err</span>) =&gt;</span> {
+        <span class="hljs-built_in">console</span>.error(err);
+        res.status(<span class="hljs-number">500</span>).send(<span class="hljs-string">&#x27;An unknown error occurred&#x27;</span>);
+    },
+    <span class="hljs-attr">auth</span>: {
+        <span class="hljs-attr">strategy</span>: <span class="hljs-string">&#x27;custom&#x27;</span>,
+        <span class="hljs-attr">custom</span>: <span class="hljs-function">(<span class="hljs-params">authHeaderValue, _req</span>) =&gt;</span> {
+            <span class="hljs-keyword">if</span> (authHeaderValue &amp;&amp; authHeaderValue === <span class="hljs-string">&#x27;test&#x27;</span>) {
+                <span class="hljs-keyword">return</span> {
+                    <span class="hljs-attr">uid</span>: <span class="hljs-number">123</span>,
+                    <span class="hljs-attr">user</span>: {
+                        <span class="hljs-attr">firstname</span>: <span class="hljs-string">&#x27;Test&#x27;</span>,
+                        <span class="hljs-attr">lastname</span>: <span class="hljs-string">&#x27;User&#x27;</span>,
+                    },
+                };
+            }
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
+        },
+    },
+});
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> mm;</code></pre>
+				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+					<h3>Usage</h3>
+				</a>
+				<a href="#basic-example" id="basic-example" style="color: inherit; text-decoration: none;">
+					<h4>Basic Example</h4>
+				</a>
+				<pre><code class="language-javascript"><span class="hljs-comment">// src/pages/api/hello.js</span>
+<span class="hljs-keyword">import</span> m <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;../../middleware&#x27;</span>; <span class="hljs-comment">// or &#x27;nextjs-api-common-middleware&#x27;</span>
+
+<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">handler</span>(<span class="hljs-params">req, res</span>) </span>{
+    res.json({ <span class="hljs-attr">hello</span>: <span class="hljs-string">&#x27;world&#x27;</span> });
+}
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> m.auth(handler); <span class="hljs-comment">// second argument could be additional options</span></code></pre>
+				<a href="#chaining-middleware" id="chaining-middleware" style="color: inherit; text-decoration: none;">
+					<h4>Chaining Middleware</h4>
+				</a>
+				<pre><code class="language-javascript"><span class="hljs-comment">// src/pages/api/hello.js</span>
+<span class="hljs-keyword">import</span> m <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;../../middleware&#x27;</span>; <span class="hljs-comment">// or &#x27;nextjs-api-common-middleware&#x27;</span>
+
+<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">handler</span>(<span class="hljs-params">req, res</span>) </span>{
+    res.json({ <span class="hljs-attr">hello</span>: <span class="hljs-string">&#x27;world&#x27;</span> });
+}
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> m._.chain([m.auth, m.guard], handler, {
+    <span class="hljs-comment">// auth options are still remembered from the initial configuration</span>
+    <span class="hljs-attr">guard</span>: {
+        <span class="hljs-attr">required</span>: [<span class="hljs-string">&#x27;foo&#x27;</span>],
+    },
+});</code></pre>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -90,10 +185,19 @@
 						<a href="interfaces/customauthhandleroptions.html" class="tsd-kind-icon">Custom<wbr>Auth<wbr>Handler<wbr>Options</a>
 					</li>
 					<li class=" tsd-kind-interface">
+						<a href="interfaces/custombearerauthhandleroptions.html" class="tsd-kind-icon">Custom<wbr>Bearer<wbr>Auth<wbr>Handler<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/defaultbearerauthhandleroptions.html" class="tsd-kind-icon">Default<wbr>Bearer<wbr>Auth<wbr>Handler<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
 						<a href="interfaces/emptyauthhandleroptions.html" class="tsd-kind-icon">Empty<wbr>Auth<wbr>Handler<wbr>Options</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/errorhandleroptions.html" class="tsd-kind-icon">Error<wbr>Handler<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/genericbearerauthhandleroptions.html" class="tsd-kind-icon">Generic<wbr>Bearer<wbr>Auth<wbr>Handler<wbr>Options</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/guardhandleroptions.html" class="tsd-kind-icon">Guard<wbr>Handler<wbr>Options</a>

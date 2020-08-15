@@ -3,7 +3,7 @@ import { PossiblyAuthedNextApiHandler, PossiblyAuthedNextApiRequest, GenericOpti
 import { _runHandler, handleDefaultError } from '../utils';
 
 /**
- * Object key may be of type HttpMethod, value must be of type PossiblyAuthedNextApiHandler | NextApiHandler
+ * Object key may be of type `HttpMethod`, value must be of type `PossiblyAuthedNextApiHandler | NextApiHandler`
  * @example
  *```javascript
  *{
