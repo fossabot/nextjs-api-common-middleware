@@ -57,7 +57,7 @@ export interface MiddlewareOptions extends GenericOptions {
 
 export type MiddlewareHandler = <T extends GenericOptions>(
 	handler: PossiblyAuthedNextApiHandler,
-	opts: T
+	opts?: T
 ) => PossiblyAuthedNextApiHandler;
 
 export type MiddlewareRestHandler = (
