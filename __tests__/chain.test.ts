@@ -27,6 +27,33 @@ describe('export', () => {
 		expect(res._getData()).toBe('OK');
 	});
 
+	test('non-static chain options get merged with existing options', async () => {
+		const m = createExport({
+			auth: {
+				strategy: 'basic',
+				basic: () => ({ uid: 1, user: { name: 'test' } }),
+			},
+		});
+
+		const { req, res } = createMocks({
+			method: 'GET',
+			query: { foo: 'bar' },
+			headers: {
+				authorization: 'basic test:test',
+			},
+		});
+
+		await m._.chain([m.auth, m.guard], defaultHandler, {
+			guard: {
+				mustBe: 'GET',
+				required: ['foo'],
+			},
+		})(req, res);
+
+		expect(res._getStatusCode()).toBe(200);
+		expect(res._getData()).toBe('OK');
+	});
+
 	test('chain executes as expected when middleware stops flow', async () => {
 		const { req, res } = createMocks({
 			method: 'GET',

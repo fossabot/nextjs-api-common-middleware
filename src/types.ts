@@ -7,6 +7,7 @@ export interface PossiblyAuthedNextApiRequest extends NextApiRequest {
 	uid?: string | number | null;
 	user?: any | null;
 	totp?: any;
+	_mws?: string[];
 }
 
 export type PossiblyAuthedNextApiHandler = (
@@ -44,7 +45,6 @@ export interface GenericOptions extends GenericObject {
 
 export interface MiddlewareOptions extends GenericOptions {
 	auth?: AuthHandlerOptions;
-	totp?: Function | Promise<PossiblyAuthedNextApiHandler>;
 	guard?: GuardHandlerOptions;
 	rest?: RestHandlerOptions;
 }

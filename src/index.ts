@@ -17,20 +17,35 @@ export function chain(
 	middleware: MiddlewareHandler[],
 	handler: PossiblyAuthedNextApiHandler,
 	opts: MiddlewareOptions = {}
-) {
+): PossiblyAuthedNextApiHandler {
 	return async (req: PossiblyAuthedNextApiRequest, res: NextApiResponse) => {
-		const getNext = (currentName: string): MiddlewareHandler | undefined => {
-			const currentIndex = middleware.findIndex((func) => func.name === currentName);
-			return middleware[currentIndex + 1];
-		};
+		if (middleware.length === 0) {
+			await handler(req, res);
+			return;
+		}
 
-		const constructHandler = (mw: MiddlewareHandler, next?: MiddlewareHandler): PossiblyAuthedNextApiHandler => {
-			if (!next) return mw(handler, opts[mw.name]);
-			return mw(constructHandler(next, getNext(next.name)), opts[mw.name]);
+		const recursiveStepThrough = async (
+			req: PossiblyAuthedNextApiRequest,
+			res: NextApiResponse,
+			idx: number = 0
+		): Promise<void> => {
+			const mw = middleware[idx];
+			if (!mw) {
+				await handler(req, res);
+				return;
+			}
+
+			const next: PossiblyAuthedNextApiHandler = async (req, res) => {
+				await recursiveStepThrough(req, res, idx + 1);
+			};
+
+			if (!req._mws) req._mws = [];
+			req._mws.push(mw.name);
+			await mw(next, opts[mw.name])(req, res);
 		};
 
 		try {
-			await constructHandler(middleware[0], middleware[1])(req, res);
+			await recursiveStepThrough(req, res);
 		} catch (error) {
 			if (typeof opts?.catch === 'function') {
 				opts?.catch(req, res, error);
@@ -49,9 +64,6 @@ function withDefaultOptions(options?: MiddlewareOptions): MiddlewareOptions {
 		},
 		auth: {
 			strategy: 'none',
-		},
-		totp: () => {
-			throw new Error('Must populate request with totp information to use the auth and totp feature');
 		},
 		...options,
 	};
@@ -91,11 +103,14 @@ function createExport(_options?: MiddlewareOptions) {
 	return {
 		rest: (handlers: RestMiddlewareHandlers, opts?: MiddlewareOptions) => rest(handlers, { ...options, ...opts }),
 		auth: middlewareHandlerFactory<Partial<AuthHandlerOptions>>(auth, options.auth ?? { strategy: 'none' }),
-		// totp: middlewareHandlerFactory(rest, options),
-		error: middlewareHandlerFactory<Partial<ErrorHandlerOptions>>(error, { catch: options?.catch || undefined }),
+		error: middlewareHandlerFactory<Partial<ErrorHandlerOptions>>(error, { catch: options?.catch }),
 		guard: middlewareHandlerFactory<Partial<GuardHandlerOptions>>(guard, options.guard ?? {}),
 		_: {
-			chain,
+			chain: (
+				middleware: MiddlewareHandler[],
+				handler: PossiblyAuthedNextApiHandler,
+				opts?: MiddlewareOptions
+			): PossiblyAuthedNextApiHandler => chain(middleware, handler, { ...options, ...opts }),
 			createExport: (opts: MiddlewareOptions) => createExport({ ...options, ...opts }),
 		},
 	};
