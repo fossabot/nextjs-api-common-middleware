@@ -75,12 +75,12 @@ function withDefaultOptions(options?: MiddlewareOptions): MiddlewareOptions {
 /**
  * @internal
  */
-function middlewareHandlerFactory<T extends GenericOptions>(mw: MiddlewareHandler, options: T) {
+function middlewareHandlerFactory<T extends GenericOptions>(mw: MiddlewareHandler, options: T): MiddlewareHandler {
 	if (typeof mw !== 'function') {
 		throw new Error('Middleware handler must be a function');
 	}
 
-	return (handler: PossiblyAuthedNextApiHandler, opts?: T) => {
+	return <T>(handler: PossiblyAuthedNextApiHandler, opts?: T): PossiblyAuthedNextApiHandler => {
 		const mergedOpts = { ...options, ...opts };
 
 		const safeHandler = async (req: PossiblyAuthedNextApiRequest, res: NextApiResponse) => {
