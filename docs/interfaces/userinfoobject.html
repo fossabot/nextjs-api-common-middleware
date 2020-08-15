@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>GuardHandlerOptions | nextjs-api-common-middleware - v0.0.0</title>
+	<title>UserInfoObject | nextjs-api-common-middleware - v0.0.0</title>
 	<meta name="description" content="Documentation for nextjs-api-common-middleware - v0.0.0">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,10 +54,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="guardhandleroptions.html">GuardHandlerOptions</a>
+					<a href="userinfoobject.html">UserInfoObject</a>
 				</li>
 			</ul>
-			<h1>Interface GuardHandlerOptions</h1>
+			<h1>Interface UserInfoObject</h1>
 		</div>
 	</div>
 </header>
@@ -68,18 +68,9 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="tsd-signature-type">GenericOptions</span>
-						<ul class="tsd-hierarchy">
-							<li>
-								<span class="target">GuardHandlerOptions</span>
-							</li>
-						</ul>
+						<span class="target">UserInfoObject</span>
 					</li>
 				</ul>
-			</section>
-			<section class="tsd-panel tsd-kind-interface">
-				<h3 class="tsd-before-signature">Indexable</h3>
-				<div class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">[</span>key: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><span class="tsd-signature-type">any</span></div>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
@@ -88,9 +79,8 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="guardhandleroptions.html#catch" class="tsd-kind-icon">catch</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="guardhandleroptions.html#mustbe" class="tsd-kind-icon">must<wbr>Be</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="guardhandleroptions.html#required" class="tsd-kind-icon">required</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="userinfoobject.html#uid" class="tsd-kind-icon">uid</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="userinfoobject.html#user" class="tsd-kind-icon">user</a></li>
 							</ul>
 						</section>
 					</div>
@@ -98,34 +88,23 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-					<a name="catch" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> catch</h3>
-					<div class="tsd-signature tsd-kind-icon">catch<span class="tsd-signature-symbol">:</span> <a href="../globals.html#catchhandler" class="tsd-signature-type">CatchHandler</a></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="uid" class="tsd-anchor"></a>
+					<h3>uid</h3>
+					<div class="tsd-signature tsd-kind-icon">uid<span class="tsd-signature-symbol">:</span> <a href="../globals.html#userid" class="tsd-signature-type">UserId</a></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="resthandleroptions.html">RestHandlerOptions</a>.<a href="resthandleroptions.html#catch">catch</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/kldzj/nextjs-api-common-middleware/blob/0df492a/src/types.ts#L49">src/types.ts:49</a></li>
+							<li>Defined in <a href="https://github.com/kldzj/nextjs-api-common-middleware/blob/0df492a/src/handlers/auth/index.ts#L11">src/handlers/auth/index.ts:11</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="mustbe" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> must<wbr>Be</h3>
-					<div class="tsd-signature tsd-kind-icon">must<wbr>Be<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>errorMessage<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>httpStatus<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>method<span class="tsd-signature-symbol">: </span><a href="../globals.html#onehttpmethod" class="tsd-signature-type">OneHttpMethod</a><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> | </span><a href="../globals.html#onehttpmethod" class="tsd-signature-type">OneHttpMethod</a></div>
+					<a name="user" class="tsd-anchor"></a>
+					<h3>user</h3>
+					<div class="tsd-signature tsd-kind-icon">user<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/kldzj/nextjs-api-common-middleware/blob/0df492a/src/handlers/guard.ts#L7">src/handlers/guard.ts:7</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="required" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> required</h3>
-					<div class="tsd-signature tsd-kind-icon">required<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>errorMessage<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>missingFields<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">; </span>fields<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span>httpStatus<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/kldzj/nextjs-api-common-middleware/blob/0df492a/src/handlers/guard.ts#L14">src/handlers/guard.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/kldzj/nextjs-api-common-middleware/blob/0df492a/src/handlers/auth/index.ts#L12">src/handlers/auth/index.ts:12</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -159,24 +138,9 @@
 					<li class=" tsd-kind-interface">
 						<a href="errorhandleroptions.html" class="tsd-kind-icon">Error<wbr>Handler<wbr>Options</a>
 					</li>
-				</ul>
-				<ul class="current">
-					<li class="current tsd-kind-interface">
+					<li class=" tsd-kind-interface">
 						<a href="guardhandleroptions.html" class="tsd-kind-icon">Guard<wbr>Handler<wbr>Options</a>
-						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="guardhandleroptions.html#catch" class="tsd-kind-icon">catch</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="guardhandleroptions.html#mustbe" class="tsd-kind-icon">must<wbr>Be</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="guardhandleroptions.html#required" class="tsd-kind-icon">required</a>
-							</li>
-						</ul>
 					</li>
-				</ul>
-				<ul class="after-current">
 					<li class=" tsd-kind-interface">
 						<a href="middlewareoptions.html" class="tsd-kind-icon">Middleware<wbr>Options</a>
 					</li>
@@ -189,9 +153,21 @@
 					<li class=" tsd-kind-interface">
 						<a href="resthandleroptions.html" class="tsd-kind-icon">Rest<wbr>Handler<wbr>Options</a>
 					</li>
-					<li class=" tsd-kind-interface">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-interface">
 						<a href="userinfoobject.html" class="tsd-kind-icon">User<wbr>Info<wbr>Object</a>
+						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="userinfoobject.html#uid" class="tsd-kind-icon">uid</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="userinfoobject.html#user" class="tsd-kind-icon">user</a>
+							</li>
+						</ul>
 					</li>
+				</ul>
+				<ul class="after-current">
 					<li class=" tsd-kind-type-alias">
 						<a href="../globals.html#authhandleroptions" class="tsd-kind-icon">Auth<wbr>Handler<wbr>Options</a>
 					</li>

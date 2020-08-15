@@ -7,9 +7,6 @@ import { _runHandler } from '../../utils';
 
 export type UserId = string | number | null | undefined;
 
-/**
- * @internal
- */
 export interface UserInfoObject {
 	uid: UserId;
 	user: any | null | undefined;

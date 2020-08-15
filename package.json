@@ -2,6 +2,9 @@
 	"name": "nextjs-api-common-middleware",
 	"version": "0.0.0",
 	"main": "dist/index.js",
+	"files": [
+		"dist"
+	],
 	"author": "Nikolai Kolodziej",
 	"license": "MIT",
 	"scripts": {
