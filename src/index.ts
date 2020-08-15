@@ -21,7 +21,6 @@ export function chain(
 	return async (req: PossiblyAuthedNextApiRequest, res: NextApiResponse) => {
 		const getNext = (currentName: string): MiddlewareHandler | undefined => {
 			const currentIndex = middleware.findIndex((func) => func.name === currentName);
-			if (!currentIndex) return;
 			return middleware[currentIndex + 1];
 		};
 
