@@ -2,6 +2,16 @@ import { NextApiResponse } from 'next';
 import { PossiblyAuthedNextApiHandler, PossiblyAuthedNextApiRequest, GenericOptions, HttpMethod } from '../types';
 import { _runHandler, handleDefaultError } from '../utils';
 
+/**
+ * Object key may be of type HttpMethod, value must be of type PossiblyAuthedNextApiHandler | NextApiHandler
+ * @example
+ *```javascript
+ *{
+ *	get: (req, res) => res.send('Hello world'),
+ *	post: (req, res) => res.send(`Hello ${req.body.name || 'world'}`),
+ *}
+ *```
+ */
 export type RestMiddlewareHandlers = {
 	[key in HttpMethod]?: PossiblyAuthedNextApiHandler;
 };

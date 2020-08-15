@@ -4,6 +4,9 @@ import { GenericAuthHandlerOptions, AuthHandlerResult, UserInfo, UserId } from '
 import { PossiblyAuthedNextApiRequest } from '../../types';
 import { _getHeaderValue } from '../../utils';
 
+/**
+ * @internal
+ */
 interface GenericBearerAuthHandlerOptions extends GenericAuthHandlerOptions {
 	strategy: 'bearer';
 	/**
@@ -12,6 +15,9 @@ interface GenericBearerAuthHandlerOptions extends GenericAuthHandlerOptions {
 	getUser: (userId: UserId) => Promise<UserInfo> | UserInfo;
 }
 
+/**
+ * @internal
+ */
 export interface DefaultBearerAuthHandlerOptions extends GenericBearerAuthHandlerOptions {
 	/**
 	 * The private or public secret that will be passed to the `jsonwebtoken.verify` call.
@@ -29,6 +35,9 @@ export interface DefaultBearerAuthHandlerOptions extends GenericBearerAuthHandle
 	jwtOptions?: JWTVerifyOptions;
 }
 
+/**
+ * @internal
+ */
 export interface CustomBearerAuthHandlerOptions extends GenericBearerAuthHandlerOptions {
 	/**
 	 * Provide your own token decode function. Must return the user id contained in the token.
@@ -38,6 +47,9 @@ export interface CustomBearerAuthHandlerOptions extends GenericBearerAuthHandler
 
 export type BearerAuthHandlerOptions = DefaultBearerAuthHandlerOptions | CustomBearerAuthHandlerOptions;
 
+/**
+ * @internal
+ */
 export const bearerAuthHandler = async (
 	req: PossiblyAuthedNextApiRequest,
 	opts: BearerAuthHandlerOptions

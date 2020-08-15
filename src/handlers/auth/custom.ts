@@ -19,6 +19,9 @@ export interface CustomAuthHandlerOptions extends GenericAuthHandlerOptions {
 	custom: (headerValue: string, req: PossiblyAuthedNextApiRequest) => Promise<UserInfo> | UserInfo;
 }
 
+/**
+ * @internal
+ */
 export const customAuthHandler = async (
 	req: PossiblyAuthedNextApiRequest,
 	opts: CustomAuthHandlerOptions

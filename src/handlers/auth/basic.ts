@@ -12,6 +12,9 @@ export interface BasicAuthHandlerOptions extends GenericAuthHandlerOptions {
 	basic: (username?: string, password?: string) => Promise<UserInfo> | UserInfo;
 }
 
+/**
+ * @internal
+ */
 export const basicAuthHandler = async (
 	req: PossiblyAuthedNextApiRequest,
 	opts: BasicAuthHandlerOptions

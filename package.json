@@ -5,9 +5,14 @@
 	"author": "Nikolai Kolodziej",
 	"license": "MIT",
 	"scripts": {
-		"prebuild": "rimraf ./dist",
+		"generate:docs": "typedoc",
+		"postbuild": "npm -s run generate:docs",
 		"build": "tsc",
-		"test": "jest"
+		"test": "jest",
+		"prepublish": "npm run test && npm run build"
+	},
+	"dependencies": {
+		"jsonwebtoken": "^8.5.1"
 	},
 	"devDependencies": {
 		"@types/jest": "^26.0.10",
@@ -18,9 +23,7 @@
 		"node-mocks-http": "^1.8.1",
 		"rimraf": "^3.0.2",
 		"ts-jest": "^26.2.0",
+		"typedoc": "^0.18.0",
 		"typescript": "^3.9.7"
-	},
-	"dependencies": {
-		"jsonwebtoken": "^8.5.1"
 	}
 }

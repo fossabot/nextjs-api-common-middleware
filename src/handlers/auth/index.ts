@@ -7,6 +7,9 @@ import { _runHandler } from '../../utils';
 
 export type UserId = string | number | null | undefined;
 
+/**
+ * @internal
+ */
 export interface UserInfoObject {
 	uid: UserId;
 	user: any | null | undefined;
@@ -21,6 +24,9 @@ export enum AuthStrategy {
 	none,
 }
 
+/**
+ * @internal
+ */
 export interface GenericAuthHandlerOptions extends GenericOptions {
 	strategy?: keyof typeof AuthStrategy;
 	/**
@@ -51,8 +57,14 @@ export type AuthHandlerOptions =
 	| BearerAuthHandlerOptions
 	| CustomAuthHandlerOptions;
 
+/**
+ * @internal
+ */
 export type AuthHandlerResult = PossiblyAuthedNextApiRequest;
 
+/**
+ * @internal
+ */
 function authHandlerFactory(
 	req: PossiblyAuthedNextApiRequest,
 	opts?: AuthHandlerOptions

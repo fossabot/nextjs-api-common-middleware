@@ -29,6 +29,9 @@ export interface RestError {
 	spread?: { [key: string]: any };
 }
 
+/**
+ * @internal
+ */
 export interface GenericObject {
 	[key: string]: any;
 }
@@ -39,6 +42,9 @@ export type CatchHandler = (
 	error: any
 ) => Promise<void> | void;
 
+/**
+ * @internal
+ */
 export interface GenericOptions extends GenericObject {
 	catch?: CatchHandler;
 }
@@ -58,3 +64,5 @@ export type MiddlewareRestHandler = (
 	handlers: RestMiddlewareHandlers,
 	opts?: MiddlewareOptions
 ) => PossiblyAuthedNextApiHandler;
+
+export { NextApiResponse };

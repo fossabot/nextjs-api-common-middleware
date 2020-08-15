@@ -1,11 +1,11 @@
 import { auth, rest, guard, error } from './handlers';
-import { NextApiResponse } from 'next';
-import { RestMiddlewareHandlers, RestHandlerOptions } from './handlers/rest';
+import { RestMiddlewareHandlers } from './handlers/rest';
 import { AuthHandlerOptions } from './handlers/auth';
 import { GuardHandlerOptions } from './handlers/guard';
 import { ErrorHandlerOptions } from './handlers/error';
 import { handleDefaultError } from './utils';
 import {
+	NextApiResponse,
 	PossiblyAuthedNextApiHandler,
 	PossiblyAuthedNextApiRequest,
 	MiddlewareHandler,
@@ -56,6 +56,9 @@ export function chain(
 	};
 }
 
+/**
+ * @internal
+ */
 function withDefaultOptions(options?: MiddlewareOptions): MiddlewareOptions {
 	return {
 		catch: (_req: PossiblyAuthedNextApiRequest, res: NextApiResponse, error: any) => {
@@ -69,6 +72,9 @@ function withDefaultOptions(options?: MiddlewareOptions): MiddlewareOptions {
 	};
 }
 
+/**
+ * @internal
+ */
 function middlewareHandlerFactory<T extends GenericOptions>(mw: MiddlewareHandler, options: T) {
 	if (typeof mw !== 'function') {
 		throw new Error('Middleware handler must be a function');
@@ -93,6 +99,9 @@ function middlewareHandlerFactory<T extends GenericOptions>(mw: MiddlewareHandle
 	};
 }
 
+/**
+ * @internal
+ */
 type Partial<T> = {
 	[P in keyof T]?: T[P];
 };
@@ -117,5 +126,7 @@ function createExport(_options?: MiddlewareOptions) {
 }
 
 export { createExport, auth, rest, guard };
+
+export { PossiblyAuthedNextApiRequest, PossiblyAuthedNextApiHandler } from './types';
 
 export default createExport();

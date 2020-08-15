@@ -1,5 +1,5 @@
-import { GenericOptions, PossiblyAuthedNextApiHandler, PossiblyAuthedNextApiRequest, HttpMethod } from '../types';
 import { NextApiResponse } from 'next';
+import { GenericOptions, PossiblyAuthedNextApiHandler, PossiblyAuthedNextApiRequest, HttpMethod } from '../types';
 
 type OneHttpMethod = keyof typeof HttpMethod;
 
