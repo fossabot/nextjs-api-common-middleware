@@ -21,7 +21,8 @@
 		"postbuild": "npm -s run generate:docs",
 		"build": "tsc",
 		"test": "jest",
-		"prepublishOnly": "npm run test && npm run build"
+		"prepublishOnly": "npm run test && npm run build",
+		"postpublish": "git push origin master --follow-tags"
 	},
 	"dependencies": {
 		"jsonwebtoken": "^8.5.1"
