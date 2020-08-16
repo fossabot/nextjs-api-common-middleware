@@ -5,14 +5,23 @@
 	"files": [
 		"dist"
 	],
-	"author": "Nikolai Kolodziej",
+	"repository": "https://github.com/kldzj/nextjs-api-common-middleware",
+	"bugs": "https://github.com/kldzj/nextjs-api-common-middleware/issues",
+	"homepage": "https://nextjs-common-middleware.kldzj.dev/",
+	"keywords": [
+		"next",
+		"nextjs",
+		"common",
+		"middleware"
+	],
+	"author": "kldzj",
 	"license": "MIT",
 	"scripts": {
 		"generate:docs": "typedoc",
 		"postbuild": "npm -s run generate:docs",
 		"build": "tsc",
 		"test": "jest",
-		"prepublish": "npm run test && npm run build"
+		"prepublishOnly": "npm run test && npm run build"
 	},
 	"dependencies": {
 		"jsonwebtoken": "^8.5.1"

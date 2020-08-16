@@ -1,5 +1,8 @@
 <div align="center">
-  <h1>nextjs-api-common-middleware</h1>
+  <h1>
+    ![nextjs-api-common-middleware](./assets/banner.jpg?raw=true)
+  </h1>
+  
   <a href="https://nextjs-common-middleware.kldzj.dev/">Docs</a>
   &nbsp;&nbsp;&bull;&nbsp;&nbsp;
   <a href="https://github.com/kldzj/nextjs-api-common-middleware/issues">Issues</a>
@@ -8,6 +11,8 @@
   &nbsp;&nbsp;&bull;&nbsp;&nbsp;
   <a>NPM</a>
 </div>
+
+<br>
 
 ## What this is about
 
@@ -28,26 +33,26 @@ If you have something in mind that is generally help- or useful and is not inclu
 
 #### NPM
 
-```sh
+```console
 yarn add nextjs-api-common-middleware
 ```
 
 #### NPM
 
-```sh
+```console
 npm install --save nextjs-api-common-middleware
 ```
 
 ### Configuration
 
-While generally not required, it is recommended that you re-export the middleware collection.
+While generally not required, it is recommended that you re-export the middleware collection with your own default configuration.
 
 Create a file called `middleware.js`/`middleware.ts` somewhere that suits you well, the contents of the file should look something like this:
 
 ```javascript
-import m from 'nextjs-api-common-middleware';
+import { createExport } from 'nextjs-api-common-middleware';
 
-const mm = m.createExport({
+const m = createExport({
 	catch: (_req, res, err) => {
 		console.error(err);
 		res.status(500).send('An unknown error occurred');
@@ -69,7 +74,7 @@ const mm = m.createExport({
 	},
 });
 
-export default mm;
+export default m;
 ```
 
 ### Usage
