@@ -1,15 +1,16 @@
 <div align="center">
-  <h1>
-    ![nextjs-api-common-middleware](./assets/banner.jpg?raw=true)
-  </h1>
-  
-  <a href="https://nextjs-common-middleware.kldzj.dev/">Docs</a>
-  &nbsp;&nbsp;&bull;&nbsp;&nbsp;
-  <a href="https://github.com/kldzj/nextjs-api-common-middleware/issues">Issues</a>
-  &nbsp;&nbsp;&bull;&nbsp;&nbsp;
-  <a>Examples</a>
-  &nbsp;&nbsp;&bull;&nbsp;&nbsp;
-  <a>NPM</a>
+<h1>
+  <img src="/assets/banner.jpg?raw=true" alt="nextjs-api-common-middleware" />
+</h1>
+
+<a href="https://nextjs-common-middleware.kldzj.dev/">Docs</a>
+&nbsp;&nbsp;&bull;&nbsp;&nbsp;
+<a href="https://github.com/kldzj/nextjs-api-common-middleware/issues">Issues</a>
+&nbsp;&nbsp;&bull;&nbsp;&nbsp;
+<a>Examples</a>
+&nbsp;&nbsp;&bull;&nbsp;&nbsp;
+<a>NPM</a>
+
 </div>
 
 <br>
