@@ -2,6 +2,7 @@ import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
 import { AuthHandlerOptions } from './handlers/auth';
 import { RestMiddlewareHandlers, RestHandlerOptions } from './handlers/rest';
 import { GuardHandlerOptions } from './handlers/guard';
+import { CorsHandlerOptions } from './handlers/cors';
 
 export interface PossiblyAuthedNextApiRequest extends NextApiRequest {
 	uid?: string | number | null;
@@ -53,16 +54,14 @@ export interface MiddlewareOptions extends GenericOptions {
 	auth?: AuthHandlerOptions;
 	guard?: GuardHandlerOptions;
 	rest?: RestHandlerOptions;
+	cors?: CorsHandlerOptions;
 }
 
-export type MiddlewareHandler = <T extends GenericOptions>(
-	handler: PossiblyAuthedNextApiHandler,
-	opts?: T
-) => PossiblyAuthedNextApiHandler;
+export type MiddlewareHandler = (handler: PossiblyAuthedNextApiHandler, opts?: any) => PossiblyAuthedNextApiHandler;
 
 export type MiddlewareRestHandler = (
 	handlers: RestMiddlewareHandlers,
-	opts?: MiddlewareOptions
+	opts?: RestHandlerOptions
 ) => PossiblyAuthedNextApiHandler;
 
 export { NextApiResponse };

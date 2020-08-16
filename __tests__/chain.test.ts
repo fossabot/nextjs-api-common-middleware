@@ -1,6 +1,7 @@
+import { NextApiResponse } from 'next';
 import { createMocks } from 'node-mocks-http';
-import { chain, createExport, auth, guard } from '../src';
-import { defaultHandler } from './setup';
+import { chain, createExport, auth, guard, PossiblyAuthedNextApiRequest } from '../src';
+import { defaultHandler, throwingHandler } from './setup';
 
 describe('export', () => {
 	test('chain executes as expected', async () => {

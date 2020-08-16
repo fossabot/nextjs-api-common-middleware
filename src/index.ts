@@ -1,9 +1,9 @@
-import { auth, rest, guard, error } from './handlers';
-import { RestMiddlewareHandlers } from './handlers/rest';
+import { auth, rest, guard, error, cors } from './handlers';
+import { RestMiddlewareHandlers, RestHandlerOptions } from './handlers/rest';
 import { AuthHandlerOptions } from './handlers/auth';
 import { GuardHandlerOptions } from './handlers/guard';
 import { ErrorHandlerOptions } from './handlers/error';
-import { handleDefaultError } from './utils';
+import { handleDefaultError, catchHandlerError } from './utils';
 import {
 	NextApiResponse,
 	PossiblyAuthedNextApiHandler,
@@ -12,6 +12,7 @@ import {
 	MiddlewareOptions,
 	GenericOptions,
 } from './types';
+import { CorsHandlerOptions } from './handlers/cors';
 
 export function chain(
 	middleware: MiddlewareHandler[],
@@ -20,7 +21,7 @@ export function chain(
 ): PossiblyAuthedNextApiHandler {
 	return async (req: PossiblyAuthedNextApiRequest, res: NextApiResponse) => {
 		if (middleware.length === 0) {
-			await handler(req, res);
+			catchHandlerError(handler, req, res, opts);
 			return;
 		}
 
@@ -44,15 +45,7 @@ export function chain(
 			await mw(next, opts[mw.name])(req, res);
 		};
 
-		try {
-			await recursiveStepThrough(req, res);
-		} catch (error) {
-			if (typeof opts?.catch === 'function') {
-				opts?.catch(req, res, error);
-			} else {
-				handleDefaultError(res, error);
-			}
-		}
+		await recursiveStepThrough(req, res);
 	};
 }
 
@@ -61,10 +54,7 @@ export function chain(
  */
 function withDefaultOptions(options?: MiddlewareOptions): MiddlewareOptions {
 	return {
-		catch: (_req: PossiblyAuthedNextApiRequest, res: NextApiResponse, error: any) => {
-			console.error(error);
-			res.status(500).json({ error: 'Internal Server Error' });
-		},
+		catch: (_req: PossiblyAuthedNextApiRequest, res: NextApiResponse, error: any) => handleDefaultError(res, error),
 		auth: {
 			strategy: 'none',
 		},
@@ -75,27 +65,14 @@ function withDefaultOptions(options?: MiddlewareOptions): MiddlewareOptions {
 /**
  * @internal
  */
-function middlewareHandlerFactory<T extends GenericOptions>(mw: MiddlewareHandler, options: T): MiddlewareHandler {
+function middlewareHandlerFactory<T extends GenericOptions>(mw: MiddlewareHandler, _opts: T) {
 	if (typeof mw !== 'function') {
 		throw new Error('Middleware handler must be a function');
 	}
 
-	return <T>(handler: PossiblyAuthedNextApiHandler, opts?: T): PossiblyAuthedNextApiHandler => {
-		const mergedOpts = { ...options, ...opts };
-
-		const safeHandler = async (req: PossiblyAuthedNextApiRequest, res: NextApiResponse) => {
-			try {
-				await handler(req, res);
-			} catch (error) {
-				if (!mergedOpts.catch) {
-					return handleDefaultError(res, error);
-				}
-
-				mergedOpts.catch(req, res, error);
-			}
-		};
-
-		return mw<T>(safeHandler, mergedOpts);
+	return (handler: PossiblyAuthedNextApiHandler, opts?: T): PossiblyAuthedNextApiHandler => {
+		const mergedOpts = { ..._opts, ...opts };
+		return mw(handler, mergedOpts);
 	};
 }
 
@@ -108,19 +85,22 @@ type Partial<T> = {
 
 function createExport(_options?: MiddlewareOptions) {
 	const options = withDefaultOptions(_options);
+	const withCatcher = <T extends GenericOptions>(opts?: T): T => ({ catch: options.catch, ...opts } as T);
 
 	return {
-		rest: (handlers: RestMiddlewareHandlers, opts?: MiddlewareOptions) => rest(handlers, { ...options, ...opts }),
-		auth: middlewareHandlerFactory<Partial<AuthHandlerOptions>>(auth, options.auth ?? { strategy: 'none' }),
-		error: middlewareHandlerFactory<Partial<ErrorHandlerOptions>>(error, { catch: options?.catch }),
-		guard: middlewareHandlerFactory<Partial<GuardHandlerOptions>>(guard, options.guard ?? {}),
+		rest: (handlers: RestMiddlewareHandlers, opts?: Partial<RestHandlerOptions>) =>
+			rest(handlers, withCatcher({ ...options.rest, ...opts })),
+		auth: middlewareHandlerFactory<Partial<AuthHandlerOptions>>(auth, withCatcher(options.auth)),
+		cors: middlewareHandlerFactory<Partial<CorsHandlerOptions>>(cors, withCatcher(options.cors)),
+		error: middlewareHandlerFactory<Partial<ErrorHandlerOptions>>(error, withCatcher<ErrorHandlerOptions>()),
+		guard: middlewareHandlerFactory<Partial<GuardHandlerOptions>>(guard, withCatcher(options.guard)),
 		_: {
 			chain: (
 				middleware: MiddlewareHandler[],
 				handler: PossiblyAuthedNextApiHandler,
 				opts?: MiddlewareOptions
 			): PossiblyAuthedNextApiHandler => chain(middleware, handler, { ...options, ...opts }),
-			createExport: (opts: MiddlewareOptions) => createExport({ ...options, ...opts }),
+			createExport: (opts?: MiddlewareOptions) => createExport({ ...options, ...opts }),
 		},
 	};
 }

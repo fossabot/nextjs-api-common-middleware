@@ -3,7 +3,7 @@ import { customAuthHandler, CustomAuthHandlerOptions } from './custom';
 import { basicAuthHandler, BasicAuthHandlerOptions } from './basic';
 import { bearerAuthHandler, BearerAuthHandlerOptions } from './bearer';
 import { PossiblyAuthedNextApiHandler, PossiblyAuthedNextApiRequest, GenericOptions } from '../../types';
-import { _runHandler } from '../../utils';
+import { _runHandler, catchHandlerError } from '../../utils';
 
 export type UserId = string | number | null | undefined;
 
@@ -89,28 +89,32 @@ export default function auth(
 	handler: PossiblyAuthedNextApiHandler,
 	opts?: AuthHandlerOptions
 ): PossiblyAuthedNextApiHandler {
-	return async (_req: PossiblyAuthedNextApiRequest, res: NextApiResponse) => {
-		const req = await authHandlerFactory(_req, opts);
+	return async (_req: PossiblyAuthedNextApiRequest, _res: NextApiResponse) => {
+		const unsafeHandler = async (__req: PossiblyAuthedNextApiRequest, res: NextApiResponse) => {
+			const req = await authHandlerFactory(__req, opts);
 
-		if (opts?.allowAnonymous) {
-			if (!req.uid) req.uid = null;
-			if (!req.user) req.user = opts.anonymousUserValue;
-			await handler(req, res);
-			return;
-		}
-
-		if (!req.uid || !req.user) {
-			if (opts?.unauthorized) {
-				const maybePromise = opts.unauthorized(req, res);
-				if (maybePromise instanceof Promise) {
-					await maybePromise;
-				}
-			} else {
-				res.status(401).json({ error: 'Unauthorized' });
+			if (opts?.allowAnonymous) {
+				if (!req.uid) req.uid = null;
+				if (!req.user) req.user = opts.anonymousUserValue;
+				await handler(req, res);
+				return;
 			}
-			return;
-		}
 
-		await handler(req, res);
+			if (!req.uid || !req.user) {
+				if (opts?.unauthorized) {
+					const maybePromise = opts.unauthorized(req, res);
+					if (maybePromise instanceof Promise) {
+						await maybePromise;
+					}
+				} else {
+					res.status(401).json({ error: 'Unauthorized' });
+				}
+				return;
+			}
+
+			await handler(req, res);
+		};
+
+		await catchHandlerError(unsafeHandler, _req, _res, opts);
 	};
 }

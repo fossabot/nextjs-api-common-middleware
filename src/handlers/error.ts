@@ -1,5 +1,6 @@
 import { NextApiResponse } from 'next';
 import { PossiblyAuthedNextApiHandler, PossiblyAuthedNextApiRequest, GenericOptions } from '../types';
+import { catchHandlerError } from '../utils';
 
 export interface ErrorHandlerOptions extends GenericOptions {}
 
@@ -11,9 +12,9 @@ export interface ErrorHandlerOptions extends GenericOptions {}
  */
 export default function error(
 	handler: PossiblyAuthedNextApiHandler,
-	_opts?: ErrorHandlerOptions
+	opts?: ErrorHandlerOptions
 ): PossiblyAuthedNextApiHandler {
 	return async (req: PossiblyAuthedNextApiRequest, res: NextApiResponse) => {
-		await handler(req, res);
+		await catchHandlerError(handler, req, res, opts);
 	};
 }

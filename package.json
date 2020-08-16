@@ -26,7 +26,8 @@
 		"postpublish": "git push origin master --follow-tags"
 	},
 	"dependencies": {
-		"jsonwebtoken": "^8.5.1"
+		"jsonwebtoken": "^8.5.1",
+		"speakeasy": "^2.0.0"
 	},
 	"devDependencies": {
 		"@types/jest": "^26.0.10",

@@ -1,6 +1,6 @@
 import { NextApiResponse } from 'next';
 import { PossiblyAuthedNextApiHandler, PossiblyAuthedNextApiRequest, GenericOptions, HttpMethod } from '../types';
-import { _runHandler, handleDefaultError } from '../utils';
+import { _runHandler, catchHandlerError } from '../utils';
 
 /**
  * Object key may be of type `HttpMethod`, value must be of type `PossiblyAuthedNextApiHandler | NextApiHandler`
@@ -33,8 +33,8 @@ export default function rest(
 	handlers: RestMiddlewareHandlers,
 	opts?: RestHandlerOptions
 ): PossiblyAuthedNextApiHandler {
-	return async (req: PossiblyAuthedNextApiRequest, res: NextApiResponse) => {
-		try {
+	return async (_req: PossiblyAuthedNextApiRequest, _res: NextApiResponse) => {
+		const unsafeHandler = async (req: PossiblyAuthedNextApiRequest, res: NextApiResponse) => {
 			if (!req.method) {
 				throw new Error(opts?.undefinedMethod ?? 'Request method is not defined');
 			}
@@ -46,12 +46,8 @@ export default function rest(
 			} else {
 				throw new Error(opts?.notImplemented ?? 'Not Implemented');
 			}
-		} catch (error) {
-			if (typeof opts?.catch === 'function') {
-				opts?.catch(req, res, error);
-			} else {
-				handleDefaultError(res, error);
-			}
-		}
+		};
+
+		await catchHandlerError(unsafeHandler, _req, _res, opts);
 	};
 }
