@@ -32,7 +32,7 @@ If you have something in mind that is generally help- or useful and is not inclu
 
 ### Installation
 
-#### NPM
+#### Yarn
 
 ```console
 yarn add nextjs-api-common-middleware
