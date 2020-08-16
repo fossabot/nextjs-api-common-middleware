@@ -1,7 +1,7 @@
 {
 	"name": "nextjs-api-common-middleware",
 	"description": "A collection of commonly used Next.js API middleware patterns",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"main": "dist/index.js",
 	"files": [
 		"dist"
