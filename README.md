@@ -15,6 +15,26 @@
 
 <br>
 
+<div align="center">
+
+![Version](https://img.shields.io/github/package-json/v/kldzj/nextjs-api-common-middleware)
+
+![Commit activity](https://img.shields.io/github/commit-activity/y/kldzj/nextjs-api-common-middleware)
+
+![Open issues](https://img.shields.io/github/issues/kldzj/nextjs-api-common-middleware)
+
+[![Build status](https://badge.buildkite.com/62d22a820f444be118932f0938c7ee278ef330b9c8bcd56c89.svg)](https://buildkite.com/kldzj/nextjs-api-common-middleware)
+
+![Dependency status](https://img.shields.io/david/kldzj/nextjs-api-common-middleware)
+
+![Dev Dependency status](https://img.shields.io/david/dev/kldzj/nextjs-api-common-middleware)
+
+![Snyk status](https://img.shields.io/snyk/vulnerabilities/github/kldzj/nextjs-api-common-middleware)
+
+</div>
+
+<br>
+
 ## What this is about
 
 This package exports some common [Next.js](https://nextjs.org/) API middleware patterns that you might need across different applications. It aims to provide useful and mostly flexible drop-in functions.
