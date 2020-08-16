@@ -7,9 +7,9 @@
 &nbsp;&nbsp;&bull;&nbsp;&nbsp;
 <a href="https://github.com/kldzj/nextjs-api-common-middleware/issues">Issues</a>
 &nbsp;&nbsp;&bull;&nbsp;&nbsp;
-<a>Examples</a>
+<a href="https://www.npmjs.com/package/nextjs-api-common-middleware">NPM</a>
 &nbsp;&nbsp;&bull;&nbsp;&nbsp;
-<a>NPM</a>
+<span>Examples <small><i>(coming some time)</i></small></span>
 
 </div>
 
