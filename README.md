@@ -17,8 +17,7 @@
 
 <div align="center">
 
-![Version](https://img.shields.io/github/package-json/v/kldzj/nextjs-api-common-middleware) ![Open issues](https://img.shields.io/github/issues/kldzj/nextjs-api-common-middleware) [![Build status](https://badge.buildkite.com/62d22a820f444be118932f0938c7ee278ef330b9c8bcd56c89.svg)](https://buildkite.com/kldzj/nextjs-api-common-middleware) ![Dependency status](https://img.shields.io/david/kldzj/nextjs-api-common-middleware) ![Dev Dependency status](https://img.shields.io/david/dev/kldzj/nextjs-api-common-middleware) ![Snyk status](https://img.shields.io/snyk/vulnerabilities/github/kldzj/nextjs-api-common-middleware)
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fkldzj%2Fnextjs-api-common-middleware.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fkldzj%2Fnextjs-api-common-middleware?ref=badge_shield)
+![Version](https://img.shields.io/github/package-json/v/kldzj/nextjs-api-common-middleware) ![Open issues](https://img.shields.io/github/issues/kldzj/nextjs-api-common-middleware) [![Build status](https://badge.buildkite.com/62d22a820f444be118932f0938c7ee278ef330b9c8bcd56c89.svg)](https://buildkite.com/kldzj/nextjs-api-common-middleware) ![Dependency status](https://img.shields.io/david/kldzj/nextjs-api-common-middleware) ![Snyk status](https://img.shields.io/snyk/vulnerabilities/github/kldzj/nextjs-api-common-middleware) [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fkldzj%2Fnextjs-api-common-middleware.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fkldzj%2Fnextjs-api-common-middleware?ref=badge_shield)
 
 </div>
 
